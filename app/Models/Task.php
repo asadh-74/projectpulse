@@ -13,6 +13,11 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $attributes = [
+        'status' => 'todo',
+        'priority' => 'medium',
+    ];
+
     protected $fillable = [
         'title', 'description', 'status', 'priority', 'due_date', 'assignee_id', 'position',
     ];

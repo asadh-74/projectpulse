@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->name('api.v1.')->group(function () {
     Route::post('auth/token', [AuthTokenController::class, 'store'])->middleware('throttle:10,1');
 
     Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {

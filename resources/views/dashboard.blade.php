@@ -29,7 +29,7 @@
 
     <section class="bg-white border rounded-lg p-4">
         <h2 class="font-semibold mb-1">Upcoming public holidays</h2>
-        <p class="text-xs text-slate-400 mb-3">Live from the Nager.Date API (cached 24h)</p>
+        <p class="text-xs text-slate-400 mb-3">National holidays + Nager.Date API (cached)</p>
         @forelse ($holidays as $h)
             <div class="flex justify-between text-sm py-1"><span>{{ $h['name'] }}</span><span class="text-slate-500">{{ \Illuminate\Support\Carbon::parse($h['date'])->format('d M') }}</span></div>
         @empty
