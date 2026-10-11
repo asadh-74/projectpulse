@@ -23,6 +23,15 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
+        // Stable token for the n8n workflow (Bearer <N8N_API_TOKEN>).
+        if ($plain = config('projectpulse.n8n_token')) {
+            $demo->tokens()->create([
+                'name' => 'n8n',
+                'token' => hash('sha256', $plain),
+                'abilities' => ['*'],
+            ]);
+        }
+
         $project = Project::factory()->for($demo, 'owner')->create([
             'name' => 'Website Redesign',
             'description' => 'Client portal revamp - sprint 4',
@@ -36,6 +45,20 @@ class DatabaseSeeder extends Seeder
                 'assignee_id' => fake()->randomElement([$demo->id, $teammate->id]),
             ]);
         }
+
+        // Deterministic rows so every n8n branch has something to act on.
+        Task::factory()->for($project)->create([
+            'title' => 'Fix login redirect bug', 'status' => TaskStatus::InProgress,
+            'due_date' => today()->subDays(5), 'assignee_id' => $teammate->id,
+        ]);
+        Task::factory()->for($project)->create([
+            'title' => 'Update API documentation', 'status' => TaskStatus::Todo,
+            'due_date' => today()->subDays(1), 'assignee_id' => $teammate->id,
+        ]);
+        Task::factory()->for($project)->create([
+            'title' => 'Ship Kanban drag-and-drop', 'status' => TaskStatus::Done,
+            'due_date' => today(), 'assignee_id' => $demo->id,
+        ]);
 
         Project::factory()->for($demo, 'owner')->create(['name' => 'API Integration', 'color' => '#059669']);
     }

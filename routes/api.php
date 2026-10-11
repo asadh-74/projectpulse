@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthTokenController;
+use App\Http\Controllers\Api\AutomationController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
@@ -15,5 +16,8 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::apiResource('projects', ProjectController::class)->except('update');
         Route::apiResource('projects.tasks', TaskController::class)->shallow();
         Route::post('tasks/{task}/comments', [CommentController::class, 'store']);
+
+        // n8n integration
+        Route::get('automation/task-digest', [AutomationController::class, 'taskDigest']);
     });
 });

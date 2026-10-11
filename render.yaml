@@ -15,3 +15,5 @@ services:
         value: stderr
       - key: DB_CONNECTION
         value: sqlite
+      - key: N8N_API_TOKEN
+        sync: false   # set a long random value in the Render dashboard
